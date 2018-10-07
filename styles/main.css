@@ -1,0 +1,327 @@
+main {
+    padding-left: 12.5%;
+    padding-right: 12.1%;
+}
+main > h2 {
+    font-size: 36px;
+    color: #333333;
+    font-weight: bold;
+    margin-top: 34px;
+    margin-bottom: 32px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cards-container {
+    display: grid;
+    grid-gap: 28px;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.big {
+    grid-column: span 4;
+    grid-row: span 3;
+}
+.middle {
+    grid-column: span 3;
+}
+.small {
+    grid-column: span 2;
+}
+
+.card__info {
+    position: relative;
+    background: #FAFAFA;
+    border-radius: var(--padding);
+    padding: var(--padding);
+    display: grid;
+    /* grid-auto-rows: min-content; */
+    grid-row-gap: 1.5em;
+}
+.card__info:hover {
+    background: #F3F3F3;
+    box-shadow: 0 2px 6px 0 rgba(197,186,186,0.50);
+    cursor: pointer;
+}
+
+.card__title {
+    display: grid;
+    grid-template-columns: min-content auto;
+    grid-template-rows: min-content;
+    grid-column-gap: 2.8%;
+}
+.card__title .icon {
+    align-self: center;
+}
+.card__title .text {
+    font-size: 24px;
+    color: #333333;
+    font-weight: bold;
+    align-self: center;
+}
+
+.card__source-time {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+p.card__source, p.card__time {
+    font-size: 18px;
+    color: #333333;
+    grid-column: span 1;
+}
+p.card__time {
+    justify-self: end;
+}
+.small .card__source-time {
+    grid-template-columns: auto;
+    grid-row-gap: 1.5em;
+}
+.small p.card__source, .small p.card__time {
+    grid-column: span 1;
+    justify-self: start;
+}
+
+.card__description {
+    font-size: 20px;
+    color: #000000;
+}
+.big .card__description {
+    font-size: 24px;
+    color: #333333;
+}
+
+/* .card__info .card__data {
+    align-self: end;
+} */
+
+.card__info:last-child {
+    align-self: end;
+}
+
+.card__data > img {
+    border-radius: var(--padding);
+    width: 100%;
+    height: 100%;
+}
+
+.no-data {
+    display: none;
+}
+
+.card__climate {
+    display: grid;
+    grid-template-columns: 40% 40%;
+    color: #000000;
+    font-size: 18px;
+    grid-row-gap: 1.9%;
+}
+.card__climate > div {
+    grid-column: span 1;
+}
+.card__climate .card__temperature::after {
+    font-weight: bold;
+    content: '24 C'
+}
+.card__climate .card__humidity::after {
+    font-weight: bold;
+    content: '80%'
+}
+
+.card__close {
+    display: none;
+    position: absolute;
+    top: var(--padding);
+    right: var(--padding);
+}
+.card__open {
+    display: none;
+    position: absolute;
+    right: var(--padding);
+    bottom: var(--padding);
+    z-index: 50;
+}
+.card__info:hover .card__close {
+    display: block;
+}
+.card__info:hover .card__open {
+    display: block;
+}
+
+.card__critical {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto var(--padding) auto;
+    border-radius: var(--padding);
+}
+.card__critical:hover {
+    box-shadow: 0 2px 6px 0 rgba(197,186,186,0.50);
+    cursor: pointer;
+}
+.card__critical:hover .critical__main {
+    background: #F3F3F3;
+}
+.card__critical:hover .card__close {
+    display: block;
+}
+.card__critical:hover .card__open {
+    display: block;
+}
+.critical__head {
+    display: grid;
+    grid-row: 1 / 3;
+    grid-column: 1 / 3;
+    grid-row-gap: 1.5em;
+    background: #DB5341;
+    border-radius: var(--padding) var(--padding) 0 0;
+    padding: var(--padding) var(--padding) calc(2 * var(--padding));
+}
+.critical__head .card__title div, .critical__head .card__source-time p {
+    color: #FFFFFF;
+}
+.critical__main {
+    display: grid;
+    grid-row: 2 / 4;
+    grid-column: 1 / 3;
+    grid-row-gap: 1.5em;
+    background: #FAFAFA;
+    border-radius: var(--padding);
+    padding: var(--padding);
+    z-index: 10;
+    /* grid-auto-rows: min-content; */
+}
+
+.card__music {
+    display: grid;
+    grid-row-gap: 20px;
+}
+.music__head {
+    display: grid;
+    grid-template-columns: min-content auto;
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 16px;
+}
+.music__head .music__cover {
+    grid-column: span 1;
+    grid-row: span 2;
+}
+.music__head .music__name {
+    grid-row: span 1;
+    font-size: 20px;
+    color: #000000;
+}
+.music__timeline {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    grid-column-gap: 16px;
+    display: grid;
+    grid-template-columns: auto min-content;
+}
+.music__timeline .track__line {
+    border: 1px solid #979797;
+    align-self: center;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+.music__timeline .track__point {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    margin-left: 6.8%;
+    height: 100%;
+    width: 12px;
+    background: #D8D8D8;
+    border-radius: 4.5px;
+    z-index: 10;
+}
+.music__timeline .track__value {
+    grid-column: 2 / 3;
+    align-self: center;
+    font-size: 14px;
+    color: #000000;
+}
+
+.music__controls {
+    display: grid;
+    grid-template-columns: min-content auto min-content;
+    grid-column-gap: 16px;
+}
+.music__buttons {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 27px;
+}
+.music__next img {
+    transform: rotate(180deg);
+}
+.music__controls .music__volumeline {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    border-radius: 2px;
+    border: 2px solid rgba(216,216,216,0.30);
+    align-self: center;
+}
+.music__volumeline-point {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    align-self: center;
+    margin-left: calc(80% - 8px);
+    height: 16px;
+    width: 16px;
+    background: #605757;
+    border-radius: 26px;
+    z-index: 10;
+}
+.music__controls .music__volume-value {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    align-self: center;
+    font-size: 14px;
+    color: #000000;
+}
+
+.card__buttons {
+    display: grid;
+    grid-column-gap: 18px;
+    grid-auto-columns: min-content;
+}
+.card__buttons div {
+    height: 54px;
+    width: 132px;
+    background: #E5E5E5;
+    border-radius: 8px;
+    grid-row: 1 / 2;
+
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+    display: table;
+}
+.card__buttons div:first-child {
+    background: #FFD93E;
+}
+.card__buttons div p{
+	display:table-cell; 
+	vertical-align:middle;
+	text-align:center;
+}
+
+/* Touch */
+#touch-container {
+    user-select: none;
+    touch-action: none;
+    overflow: hidden;
+    border-radius: var(--padding);
+}
+#touch-img {
+    -webkit-user-drag: none;
+    transform: scale(1.2);
+}
+
+
+.image-params {
+    display: none;
+}
+/*-------*/

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Яндекс Дом</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/header.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/footer.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/tablet.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/mobile.css" />
+    
+    <!-- <script src="scripts/pep.js"></script> -->
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header__logo">
+                <a href="#"><img src="assets/Яндекс Дом@1x.png" srcset="" alt="Яндекс Дом"></a>
+            </div>
+            <div class="ad-menu">
+                <nav class="nav" tabindex="1">
+                    <ul>
+                        <li><a href="#" class="active">События</a></li>
+                        <li><a href="#">Сводка</a></li>
+                        <li><a href="#">Устройства</a></li>
+                        <li><a href="#">Сценарии</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h2>Лента событий</h2>
+        <div class="cards-container">
+            <div class="card__info big">
+                <div class="card__title">
+                    <div class="icon"><img src="assets/line-chart.svg"></div>
+                    <div class="text">Еженедельный отчет по расходам ресурсов</div>
+                </div>
+                <div class="card__source-time">
+                    <p class="card__source">Сенсоры потребления</p>
+                    <p class="card__time">19:00, Сегодня</p>
+                </div>
+                <p class="card__description">
+                    Так держать! За последнюю неделю вы потратили на 10% меньше ресурсов, чем неделей ранее.
+                </p>
+                <div class="card__data">
+                    <img src="assets/Richdata.svg" alt="График" width="100%" height="100%">
+                </div>
+                <div class="card__close"><img src="assets/cross.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+            <div class="card__info small">
+                <div class="card__title">
+                    <div class="icon"><img src="assets/key.svg"></div>
+                    <div class="text">Дверь открыта</div>
+                </div>
+                <div class="card__source-time">
+                    <p class="card__source">Сенсор входной двери</p>
+                    <p class="card__time">18:50, Сегодня</p>
+                </div>
+                <p class="card__description no-data"></p>
+                <div class="card__data no-data"></div>
+                <div class="card__close"><img src="assets/cross.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+            <div class="card__info small">
+                <div class="card__title">
+                    <div class="icon"><img src="assets/robot-cleaner.svg"></div>
+                    <div class="text">Уборка закончена</div>
+                </div>
+                <div class="card__source-time">
+                    <p class="card__source">Пылесос</p>
+                    <p class="card__time">18:45, Сегодня</p>
+                </div>
+                <p class="card__description no-data"></p>
+                <div class="card__data no-data"></div>
+                <div class="card__close"><img src="assets/cross.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+            <div class="card__info small">
+                <div class="card__title">
+                    <div class="icon"><img src="assets/router.svg"></div>
+                    <div class="text">Новый пользователь</div>
+                </div>
+                <div class="card__source-time">
+                    <p class="card__source">Роутер</p>
+                    <p class="card__time">18:45, Сегодня</p>
+                </div>
+                <p class="card__description no-data"></p>
+                <div class="card__data no-data"></div>
+                <div class="card__close"><img src="assets/cross.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+            <div class="card__info middle">
+                <div class="card__title">
+                    <div class="icon"><img src="assets/thermal.svg"></div>
+                    <div class="text">Изменен климатический режим</div>
+                </div>
+                <div class="card__source-time">
+                    <p class="card__source">Сенсор микроклимата</p>
+                    <p class="card__time">18:30, Сегодня</p>
+                </div>
+                <p class="card__description">Установлен климатический режим «Фиджи»</p>
+                <div class="card__data">
+                    <div class="card__climate">
+                        <div class="card__temperature">Температура: </div>
+                        <div class="card__humidity">Влажность: </div>
+                    </div>
+                </div>
+                <div class="card__close"><img src="assets/cross.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+            <div class="card__critical middle">
+                <div class="critical__head">
+                    <div class="card__title">
+                        <div class="icon"><img src="assets/ac-white.svg"></div>
+                        <div class="text">Невозможно включить кондиционер</div>
+                    </div>
+                    <div class="card__source-time">
+                        <p class="card__source">Кондиционер</p>
+                        <p class="card__time">18:21, Сегодня</p>
+                    </div>
+                </div>
+                <div class="critical__main">
+                    <p class="card__description">В комнате открыто окно, закройте его и повторите попытку</p>
+                    <div class="card__data no-data"></div>                   
+                </div>
+                <div class="card__close"><img src="assets/cross-white.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+            <div class="card__info middle">
+                <div class="card__title">
+                    <div class="icon"><img src="assets/music.svg"></div>
+                    <div class="text">Музыка включена</div>
+                </div>
+                <div class="card__source-time">
+                    <p class="card__source">Яндекс.Станция</p>
+                    <p class="card__time">18:16, Сегодня</p>
+                </div>
+                <p class="card__description">Сейчас проигрывается:</p>
+                <div class="card__data">
+                    <div class="card__music">
+                        <div class="music__head">
+                            <div class="music__cover"><img src="assets/album-cover.png"></div>
+                            <div class="music__name">Florence & The Machine - Big God</div>
+                            <div class="music__timeline">
+                                <div class="track__line"></div>
+                                <div class="track__point"></div>
+                                <div class="track__value">4:31</div>
+                            </div>
+                        </div>                        
+                        <div class="music__controls">
+                            <div class="music__buttons">
+                                <div class="music__prev">
+                                    <img src="assets/Prev.svg" alt="Prev">
+                                </div>
+                                <div class="music__next">
+                                    <img src="assets/Prev.svg" alt="Next">
+                                </div>
+                            </div>
+                            <div class="music__volumeline"></div>
+                            <div class="music__volumeline-point"></div>
+                            <div class="music__volume-value">80%</div>     
+                        </div>
+                    </div>
+                </div>
+                <div class="card__close"><img src="assets/cross.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+            <div class="card__info middle">
+                <div class="card__title">
+                    <div class="icon"><img src="assets/fridge.svg"></div>
+                    <div class="text">Заканчивается молоко</div>
+                </div>
+                <div class="card__source-time">
+                    <p class="card__source">Холодильник</p>
+                    <p class="card__time">17:23, Сегодня</p>
+                </div>
+                <p class="card__description">Кажется, в холодильнике заканчивается молоко. Вы хотите добавить его в список покупок?</p>
+                <div class="card__data">
+                    <div class="card__buttons">
+                        <div><p>Да</p></div>
+                        <div><p>Нет</p></div>
+                    </div>
+                </div>
+                <div class="card__close"><img src="assets/cross.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+            <div class="card__info small">
+                <div class="card__title">
+                    <div class="icon"><img src="assets/battery.svg"></div>
+                    <div class="text">Зарядка завершена</div>
+                </div>
+                <div class="card__source-time">
+                    <p class="card__source">Оконный сенсор</p>
+                    <p class="card__time">16:22, Сегодня</p>
+                </div>
+                <p class="card__description">Ура! Устройство «Оконный сенсор» снова в строю!</p>
+                <div class="card__data no-data"></div>
+                <div class="card__close"><img src="assets/cross.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+            <div class="card__critical big">
+                <div class="critical__head">
+                    <div class="card__title">
+                        <div class="icon"><img src="assets/cam-white.svg"></div>
+                        <div class="text">Пылесос застрял</div>
+                    </div>
+                    <div class="card__source-time">
+                        <p class="card__source">Сенсор движения</p>
+                        <p class="card__time">16:20, Сегодня</p>
+                    </div>
+                </div>
+                <div class="critical__main">
+                    <p class="card__description">Робопылесос не смог сменить свое местоположение в течение последних 3 минут. Похоже, ему нужна помощь.</p>
+                    <div class="card__data" id="touch-container">
+                        <img id="touch-img" src="assets/bitmap.png" srcset="assets/bitmap@2x.png 1920w, assets/bitmap@3x.png 2400w" alt="Пылесос">
+                    </div>
+                    <div class="image-params">
+                        <p id="img-zoom">Приближение: 120%</p>
+                        <p id="img-bright">Яркость: 50%</p>
+                    </div>
+                </div>
+                <div class="card__close"><img src="assets/cross-white.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+            <div class="card__info small">
+                <div class="card__title">
+                    <div class="icon"><img src="assets/kettle.svg"></div>
+                    <div class="text">Вода вскипела</div>
+                </div>
+                <div class="card__source-time">
+                    <p class="card__source">Чайник</p>
+                    <p class="card__time">16:17, Сегодня</p>
+                </div>
+                <p class="card__description no-data"></p>
+                <div class="card__data no-data"></div>
+                <div class="card__close"><img src="assets/cross.svg" alt="Закрыть"></div>
+                <div class="card__open"><img src="assets/Next.svg" alt="Открыть"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer__links">
+            <a href="#">Помощь</a>
+            <a href="#">Обратная связь</a>
+            <a href="#">Разработчикам</a>
+            <a href="#">Условия использования</a>
+            <a href="license.pdf">Лицензия</a>
+            <span>© 2001–2017  ООО «Яндекс»</span>
+        </div>
+    </footer>
+    
+    <script src="scripts/index.js"></script>
+</body>
+</html>
