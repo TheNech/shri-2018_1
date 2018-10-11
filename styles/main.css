@@ -1,12 +1,13 @@
 main {
+    padding-top: 34px;
     padding-left: 12.5%;
     padding-right: 12.1%;
+    padding-bottom: 34px;
 }
 main > h2 {
     font-size: 36px;
     color: #333333;
     font-weight: bold;
-    margin-top: 34px;
     margin-bottom: 32px;
 
     display: -webkit-box;

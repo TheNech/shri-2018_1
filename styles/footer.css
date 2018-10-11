@@ -1,6 +1,6 @@
 footer {
     border-top: 1px solid #F0F0F0; 
-    margin-top: 79px;
+    /* margin-top: 79px; */
     height: 63px;
     width: 100%;
 }
@@ -16,6 +16,7 @@ footer {
 .footer__links a {
     color: #858585;
     margin-left: 10px;
+    text-decoration: none;
 }
 .footer__links a:first {
     margin-left: 0;
