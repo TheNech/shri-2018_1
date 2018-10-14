@@ -69,6 +69,8 @@ function getMaxOfArray(numArray) {
 // Развертывание видео
 allVideos.forEach((element) => {
     element.addEventListener('click', (e) => {
+        document.querySelector('main > h2').style.display = 'none';
+
         const mainBlock = document.querySelector('main');
         const mainBlockStyle = getComputedStyle(mainBlock, null);
         const mainHeight = parseInt(mainBlockStyle.getPropertyValue('height'));
@@ -143,5 +145,6 @@ buttonsBack.forEach((element) => {
         parrent.style.height = '';
         parrent.style.width = '';
         parrent.querySelector('video').muted = true;
+        document.querySelector('main > h2').style.display = 'block';
     })
 });
