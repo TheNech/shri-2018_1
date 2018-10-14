@@ -31,7 +31,7 @@ app.get('/api/events', (req, res) => {
     if (req.query.type) {
         let type = req.query.type.split(':');
         if (!isTypeCorrect(type)) {
-            res.sendStatus(400);
+            res.status(400).send('incorrect type');
         } else if (type.length === allowTypes.length) {
             res.json(data);
         } else {
@@ -46,7 +46,7 @@ app.post('/api/events', (req, res) => {
     if(req.body.type) {
         let type = req.body.type.split(':');
         if (!isTypeCorrect(type)) {
-            res.sendStatus(400);
+            res.status(400).send('incorrect type');
         } else if (type.length === allowTypes.length) {
             res.json(data);
         } else {
