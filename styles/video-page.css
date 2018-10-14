@@ -97,9 +97,14 @@ button {
         grid-gap: 16px;
     }
 }
-@media (max-width: 411px) {
-    .video-container {
+@media (max-width: 450px) {
+    /* .video-container {
         grid-template-columns: repeat(1, 1fr);
+    } */
+
+    .video video {
+        width: 100%;
+        height: 180px;
     }
 
     .video__full .video__controls {

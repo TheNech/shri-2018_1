@@ -7,7 +7,7 @@ function initVideo(video, url) {
             video.play();
         });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8';
+        video.src = url;
         video.addEventListener('loadedmetadata', function () {
             video.play();
         });
@@ -51,7 +51,7 @@ allVideos.forEach(element => {
     sourcesStore[element.id] = ctx.createMediaElementSource(element);
 });
 
-let video = false;
+let video = null;
 let source;
 
 processor.addEventListener('audioprocess', () => {
@@ -72,11 +72,37 @@ allVideos.forEach((element) => {
         const mainBlock = document.querySelector('main');
         const mainBlockStyle = getComputedStyle(mainBlock, null);
         const mainHeight = parseInt(mainBlockStyle.getPropertyValue('height'));
+        const mainWidth = parseInt(mainBlockStyle.getPropertyValue('width'));
 
         const parrent = e.target.parentElement;
         
         parrent.style.height = mainHeight + 'px';
         parrent.classList.add('video__full');
+
+        // Попытка сделать анимацию
+
+        // const dh = mainHeight / 30;
+        // const dw = mainWidth / 30;
+        // let parHeight = 0;
+        // let parWidth = 0;
+
+        // parrent.classList.add('video__open');
+        // parrent.style.left = e.x + 'px';
+        // const timer = setInterval(() => {
+        //     if(parHeight >= 0.97 * mainHeight) {
+        //         parrent.style.height = mainHeight + 'px';
+        //         parrent.style.width = mainWidth + 'px';
+        //         parrent.classList.add('video__full');
+        //         clearInterval(timer);
+        //     } else {
+        //         parHeight += dh;
+        //         parWidth += dw;
+        //         parrent.style.height = parHeight + 'px';
+        //         parrent.style.width = parWidth + 'px';
+        //     }
+
+        // }, 1000 / 60);
+
 
         e.target.muted = false;
 
@@ -113,7 +139,9 @@ buttonsBack.forEach((element) => {
     element.addEventListener('click', (e) => {
         const parrent = e.target.parentElement;
         parrent.classList.remove('video__full');
+        parrent.classList.remove('video__open');
         parrent.style.height = '';
+        parrent.style.width = '';
         parrent.querySelector('video').muted = true;
     })
 });
