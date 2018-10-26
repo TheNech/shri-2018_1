@@ -1,7 +1,7 @@
-var container = document.querySelector('#touch-container');
-var image = document.querySelector('#touch-img');
-var currentPointerEvents = {};
-var imageState = {
+const container = document.querySelector('#touch-container');
+const image = document.querySelector('#touch-img');
+const currentPointerEvents = {};
+const imageState = {
     scale: 1.5,
     scaleMin: 1.5,
     scaleMax: 3,
@@ -12,7 +12,7 @@ var imageState = {
     brightMax: 4
 };
 imageState.paddingX = (container.offsetWidth - container.offsetWidth / imageState.scale) / 2;
-var gesture = {
+let gesture = {
     type: '',
     startDist: 0,
     startScale: 0,
@@ -20,23 +20,23 @@ var gesture = {
     startAngle: 0,
     angleDiff: 0
 };
-container.addEventListener('pointerdown', function (event) {
+container.addEventListener('pointerdown', (event) => {
     container.setPointerCapture(event.pointerId);
     currentPointerEvents[event.pointerId] = event;
     if (!gesture.type) {
         gesture.type = 'move';
     }
 });
-var imageParams = {
+const imageParams = {
     pos: document.querySelector('.image-params__pos').innerText,
     scale: document.querySelector('.image-params__scale').innerText,
     bright: document.querySelector('.image-params__bright').innerText
 };
-var setImageParams = function (name, value) {
+const setImageParams = (name, value) => {
     imageParams[name] = Math.round(value * 100) / 100;
 };
-var setTransform = function (dx) {
-    var paddingX = imageState.paddingX, scale = imageState.scale;
+const setTransform = (dx) => {
+    const { paddingX, scale } = imageState;
     if (dx < 0 && (imageState.translateX + dx) < -paddingX) {
         imageState.translateX = -paddingX;
     }
@@ -46,41 +46,37 @@ var setTransform = function (dx) {
     else {
         imageState.translateX += dx;
     }
-    image.style.transform = "scale(" + scale + ") translateX(" + imageState.translateX + "px)";
+    image.style.transform = `scale(${scale}) translateX(${imageState.translateX}px)`;
     setImageParams('scale', imageState.scale);
     setImageParams('pos', -imageState.translateX);
 };
-var getDistance = function (e1, e2) {
-    var x1 = e1.clientX, y1 = e1.clientY;
-    var x2 = e2.clientX, y2 = e2.clientY;
+const getDistance = (e1, e2) => {
+    const { clientX: x1, clientY: y1 } = e1;
+    const { clientX: x2, clientY: y2 } = e2;
     return Math.sqrt(Math.pow((x1 - x2), 2) - Math.pow((y1 - y2), 2));
 };
-var getAngle = function (e1, e2) {
-    var x1 = e1.clientX, y1 = e1.clientY;
-    var x2 = e2.clientX, y2 = e2.clientY;
-    var r = Math.atan2(x2 - x1, y2 - y1);
+const getAngle = (e1, e2) => {
+    const { clientX: x1, clientY: y1 } = e1;
+    const { clientX: x2, clientY: y2 } = e2;
+    const r = Math.atan2(x2 - x1, y2 - y1);
     return 360 - (180 + Math.round(r * 180 / Math.PI));
 };
-container.addEventListener('pointermove', function (event) {
-    var pointersCount = Object.keys(currentPointerEvents).length;
+container.addEventListener('pointermove', (event) => {
+    const pointersCount = Object.keys(currentPointerEvents).length;
     if (pointersCount === 0 || !gesture.type) {
         return;
     }
     if (pointersCount === 1 && gesture.type === 'move') {
-        var previousEvent = currentPointerEvents[event.pointerId];
-        var dx = event.clientX - previousEvent.clientX;
+        const previousEvent = currentPointerEvents[event.pointerId];
+        const dx = event.clientX - previousEvent.clientX;
         setTransform(dx);
         currentPointerEvents[event.pointerId] = event;
     }
     else if (pointersCount === 2) {
         currentPointerEvents[event.pointerId] = event;
-        // const events = Object.values(currentPointerEvents);
-        var events = [];
-        for (var key in currentPointerEvents) {
-            events.push(currentPointerEvents[key]);
-        }
-        var dist = getDistance(events[0], events[1]);
-        var angle = getAngle(events[0], events[1]);
+        const events = Object.values(currentPointerEvents);
+        const dist = getDistance(events[0], events[1]);
+        const angle = getAngle(events[0], events[1]);
         if (!gesture.startDist) {
             gesture.startScale = imageState.scale;
             gesture.startDist = dist;
@@ -89,8 +85,8 @@ container.addEventListener('pointermove', function (event) {
             gesture.angleDiff = 0;
             gesture.type = null;
         }
-        var diff = dist / gesture.startDist;
-        var angleDiff = angle - gesture.startAngle;
+        const diff = dist / gesture.startDist;
+        const angleDiff = angle - gesture.startAngle;
         if (!gesture.type) {
             if (Math.abs(dist - gesture.startDist) < 32 && Math.abs(angleDiff) < 8) {
                 return;
@@ -103,20 +99,20 @@ container.addEventListener('pointermove', function (event) {
             }
         }
         if (gesture.type === 'scale') {
-            var scaleMin = imageState.scaleMin, scaleMax = imageState.scaleMax;
-            var scale = gesture.startScale * diff;
+            const { scaleMin, scaleMax } = imageState;
+            let scale = gesture.startScale * diff;
             if (diff < 1) {
                 imageState.scale = Math.max(scale, scaleMin);
             }
             else {
                 imageState.scale = Math.min(scale, scaleMax);
             }
-            var startPaddingX = imageState.paddingX;
+            const startPaddingX = imageState.paddingX;
             imageState.paddingX = (container.offsetWidth - container.offsetWidth / imageState.scale) / 2;
             setTransform(imageState.paddingX - startPaddingX);
         }
         if (gesture.type === 'rotate') {
-            var brightMin = imageState.brightMin, brightMax = imageState.brightMax;
+            const { brightMin, brightMax } = imageState;
             if (Math.abs(angleDiff - gesture.angleDiff) > 300) {
                 gesture.startBright = imageState.bright;
                 gesture.startAngle = angle;
@@ -124,7 +120,7 @@ container.addEventListener('pointermove', function (event) {
                 return;
             }
             gesture.angleDiff = angleDiff;
-            var bright = gesture.startBright + angleDiff / 50;
+            let bright = gesture.startBright + angleDiff / 50;
             if (angleDiff < 0) {
                 bright = Math.max(bright, brightMin);
             }
@@ -132,12 +128,12 @@ container.addEventListener('pointermove', function (event) {
                 bright = Math.min(bright, brightMax);
             }
             imageState.bright = bright;
-            image.style.filter = "brightness(" + bright + ")";
+            image.style.filter = `brightness(${bright})`;
             setImageParams('bright', bright);
         }
     }
 });
-var onPointerUp = function (event) {
+const onPointerUp = (event) => {
     gesture = {
         type: '',
         startDist: 0,

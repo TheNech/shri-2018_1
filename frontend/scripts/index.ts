@@ -1,8 +1,6 @@
 const container = document.querySelector<HTMLElement>('#touch-container');
 const image = document.querySelector<HTMLElement>('#touch-img');
 
-const zoomText = document.querySelector('#img-zoom');
-
 // Позволяет индексировать поля объекта
 interface IPointerStringArray {
     [index: string]: PointerEvent;
@@ -96,12 +94,7 @@ container.addEventListener('pointermove', (event: PointerEvent) => {
     } else if(pointersCount === 2) {
         currentPointerEvents[event.pointerId] = event;
 
-        // const events = Object.values(currentPointerEvents);
-        let events: PointerEvent[] = [];
-        for(let key in currentPointerEvents) {
-                events.push(currentPointerEvents[key]);
-        }
-
+        const events = Object.values(currentPointerEvents);
 
         const dist = getDistance(events[0], events[1]);
         const angle = getAngle(events[0], events[1]);
