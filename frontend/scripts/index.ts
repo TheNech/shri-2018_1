@@ -1,29 +1,44 @@
-const container = document.querySelector('#touch-container');
-const image = document.querySelector('#touch-img');
+const container = document.querySelector<HTMLInputElement>('#touch-container');
+const image = document.querySelector<HTMLInputElement>('#touch-img');
 
 const zoomText = document.querySelector('#img-zoom');
 
-const currentPointerEvents = {};
+// Позволяет индексировать поля объекта
+interface IPointerStringArray {
+    [index: string]: PointerEvent;
+}
+const currentPointerEvents: IPointerStringArray = {};
 
-const imageState = {
+interface ImageStringArray {
+    [index: string]: number;
+}
+const imageState: ImageStringArray = {
     scale: 1.5,
     scaleMin: 1.5,
     scaleMax: 3,
     translateX: 0,
+    paddingX: 0,
     brightMin: .2,
     bright: 1,
     brightMax: 4 
 };
 imageState.paddingX = (container.offsetWidth - container.offsetWidth / imageState.scale) / 2;
 
-let gesture = null;
+let gesture = {
+    type: '',
+    startDist: 0,
+    startScale: 0,
+    startBright: 0,
+    startAngle: 0,
+    angleDiff: 0
+};
 
-container.addEventListener('pointerdown', (event) => {
+container.addEventListener('pointerdown', (event: PointerEvent) => {
     container.setPointerCapture(event.pointerId);
     
     currentPointerEvents[event.pointerId] = event;
-    if(!gesture) {
-        gesture = { type: 'move' };
+    if(!gesture.type) {
+        gesture.type = 'move';
     }
 });
 
@@ -33,11 +48,11 @@ const imageParams = {
     bright: document.querySelector('.image-params__bright')
 };
 
-const setImageParams = (name, value) => {
+const setImageParams = (name: string, value: number) => {
     imageParams[name].innerText = Math.round(value * 100) / 100;
 }
 
-const setTransform = (dx) => {
+const setTransform = (dx: number) => {
     const { paddingX, scale } = imageState;
 
     if(dx < 0 && (imageState.translateX + dx) < -paddingX) {
@@ -53,13 +68,13 @@ const setTransform = (dx) => {
     setImageParams('pos', -imageState.translateX);
 };
 
-const getDistance = (e1, e2) => {
+const getDistance = (e1: PointerEvent, e2: PointerEvent) => {
     const {clientX: x1, clientY: y1} = e1;
     const {clientX: x2, clientY: y2} = e2;
     return Math.sqrt((x1 - x2) ** 2 - (y1 - y2) ** 2);
 };
 
-const getAngle = (e1, e2) => {
+const getAngle = (e1: PointerEvent, e2: PointerEvent) => {
     const {clientX: x1, clientY: y1} = e1;
     const {clientX: x2, clientY: y2} = e2;
     const r = Math.atan2(x2 - x1, y2 - y1);
@@ -69,7 +84,7 @@ const getAngle = (e1, e2) => {
 container.addEventListener('pointermove', (event) => {
     const pointersCount = Object.keys(currentPointerEvents).length;
 
-    if (pointersCount === 0 || !gesture) {
+    if (pointersCount === 0 || !gesture.type) {
         return;
     }
 
@@ -150,8 +165,15 @@ container.addEventListener('pointermove', (event) => {
 
 });
 
-const onPointerUp = (event) => {
-    gesture = null;
+const onPointerUp = (event: PointerEvent): void => {
+    gesture = {
+        type: '',
+        startDist: 0,
+        startScale: 0,
+        startBright: 0,
+        startAngle: 0,
+        angleDiff: 0
+    };
     delete currentPointerEvents[event.pointerId];
 }
 
