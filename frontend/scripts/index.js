@@ -29,12 +29,12 @@ container.addEventListener('pointerdown', function (event) {
     }
 });
 var imageParams = {
-    pos: document.querySelector('.image-params__pos'),
-    scale: document.querySelector('.image-params__scale'),
-    bright: document.querySelector('.image-params__bright')
+    pos: document.querySelector('.image-params__pos').innerText,
+    scale: document.querySelector('.image-params__scale').innerText,
+    bright: document.querySelector('.image-params__bright').innerText
 };
 var setImageParams = function (name, value) {
-    imageParams[name].innerText = Math.round(value * 100) / 100;
+    imageParams[name] = Math.round(value * 100) / 100;
 };
 var setTransform = function (dx) {
     var paddingX = imageState.paddingX, scale = imageState.scale;
@@ -75,7 +75,11 @@ container.addEventListener('pointermove', function (event) {
     }
     else if (pointersCount === 2) {
         currentPointerEvents[event.pointerId] = event;
-        var events = Object.values(currentPointerEvents);
+        // const events = Object.values(currentPointerEvents);
+        var events = [];
+        for (var key in currentPointerEvents) {
+            events.push(currentPointerEvents[key]);
+        }
         var dist = getDistance(events[0], events[1]);
         var angle = getAngle(events[0], events[1]);
         if (!gesture.startDist) {

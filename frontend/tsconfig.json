@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "module": "amd",
-        "outDir": "./dist",
-        "lib": ["es6", "dom","dom.iterable", "es2017"],
+        "module": "es6",
+        "outDir": "./dist/",
+        // "lib": ["es2017.object"],
         // "strict": true,
         "noImplicitAny": true,
 

@@ -1,5 +1,5 @@
-const container = document.querySelector<HTMLInputElement>('#touch-container');
-const image = document.querySelector<HTMLInputElement>('#touch-img');
+const container = document.querySelector<HTMLElement>('#touch-container');
+const image = document.querySelector<HTMLElement>('#touch-img');
 
 const zoomText = document.querySelector('#img-zoom');
 
@@ -10,9 +10,9 @@ interface IPointerStringArray {
 const currentPointerEvents: IPointerStringArray = {};
 
 interface ImageStringArray {
-    [index: string]: number;
+    [index: string]: string | number;
 }
-const imageState: ImageStringArray = {
+const imageState = {
     scale: 1.5,
     scaleMin: 1.5,
     scaleMax: 3,
@@ -42,14 +42,14 @@ container.addEventListener('pointerdown', (event: PointerEvent) => {
     }
 });
 
-const imageParams = {
-    pos: document.querySelector('.image-params__pos'),
-    scale: document.querySelector('.image-params__scale'),
-    bright: document.querySelector('.image-params__bright')
+const imageParams: ImageStringArray = {
+    pos: document.querySelector<HTMLElement>('.image-params__pos').innerText,
+    scale: document.querySelector<HTMLElement>('.image-params__scale').innerText,
+    bright: document.querySelector<HTMLElement>('.image-params__bright').innerText
 };
 
 const setImageParams = (name: string, value: number) => {
-    imageParams[name].innerText = Math.round(value * 100) / 100;
+    imageParams[name] = Math.round(value * 100) / 100;
 }
 
 const setTransform = (dx: number) => {
@@ -81,7 +81,7 @@ const getAngle = (e1: PointerEvent, e2: PointerEvent) => {
     return 360 - (180 + Math.round(r * 180 / Math.PI));
 }
 
-container.addEventListener('pointermove', (event) => {
+container.addEventListener('pointermove', (event: PointerEvent) => {
     const pointersCount = Object.keys(currentPointerEvents).length;
 
     if (pointersCount === 0 || !gesture.type) {
@@ -95,7 +95,14 @@ container.addEventListener('pointermove', (event) => {
         currentPointerEvents[event.pointerId] = event;
     } else if(pointersCount === 2) {
         currentPointerEvents[event.pointerId] = event;
-        const events = Object.values(currentPointerEvents);
+
+        // const events = Object.values(currentPointerEvents);
+        let events: PointerEvent[] = [];
+        for(let key in currentPointerEvents) {
+                events.push(currentPointerEvents[key]);
+        }
+
+
         const dist = getDistance(events[0], events[1]);
         const angle = getAngle(events[0], events[1]);
 
