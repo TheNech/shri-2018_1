@@ -19,7 +19,10 @@ initVideo(document.querySelector('#video-2'), 'http://localhost:9191/master?url=
 initVideo(document.querySelector('#video-3'), 'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fdog%2Fmaster.m3u8');
 initVideo(document.querySelector('#video-4'), 'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fhall%2Fmaster.m3u8');
 const allVideos = document.querySelectorAll('video');
-const ctx = window.AudioContext; // проверить
+const contextClass = window.AudioContext || window.webkitAudioContext;
+const ctx = new contextClass();
+// const ctx = new(window.AudioContext)();
+// const ctx: AudioContext = window.AudioContext; // проверить
 const analyser = ctx.createAnalyser();
 const processor = ctx.createScriptProcessor(2048, 1, 1);
 let data = new Uint8Array(analyser.frequencyBinCount);
@@ -44,7 +47,8 @@ function getAverageValue(numArray) {
     for (let i = 0; i < numArray.length; i++) {
         value += numArray[i];
     }
-    return value / numArray.length;
+    value = Math.round(value / numArray.length);
+    return value;
 }
 // Развертывание видео
 allVideos.forEach((element) => {
@@ -56,6 +60,7 @@ allVideos.forEach((element) => {
         parrent.style.height = mainHeight + 'px';
         parrent.classList.add('video__full');
         e.target.muted = false;
+        isVideo = true;
         video = e.target;
         source = sourcesStore[e.target.id];
         source.connect(analyser);

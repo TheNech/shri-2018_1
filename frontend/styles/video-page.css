@@ -86,7 +86,7 @@ button {
     border: 1px#000000 solid ;
 }
 .volume__line {
-    width: 250px;
+    width: 0px;
     background: #FFD93E;
     height: 100%;
 }

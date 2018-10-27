@@ -38,11 +38,23 @@ initVideo(
 const allVideos = document.querySelectorAll<HTMLVideoElement>('video');
 
 // Анализатор звука
-declare interface Window {
-    AudioContext: AudioContext,
+// declare interface Window {
+//     AudioContext: AudioContext,
+// }
+
+interface Constructable<T> {
+    new() : T;
+}
+interface Window {
+    AudioContext: Constructable<AudioContext>;
+    webkitAudioContext: Constructable<AudioContext>
 }
 
-const ctx: AudioContext = window.AudioContext; // проверить
+const contextClass = window.AudioContext || window.webkitAudioContext;
+const ctx: AudioContext = new contextClass();
+
+// const ctx = new(window.AudioContext)();
+// const ctx: AudioContext = window.AudioContext; // проверить
 const analyser = ctx.createAnalyser();
 const processor = ctx.createScriptProcessor(2048, 1, 1);
 let data = new Uint8Array(analyser.frequencyBinCount);
@@ -77,7 +89,8 @@ function getAverageValue(numArray: number[] | Uint8Array) {
     for(let i = 0; i < numArray.length; i++) {
         value += numArray[i];
     }
-    return value / numArray.length;
+    value = Math.round(value / numArray.length);
+    return value;
 }
 
 // Развертывание видео
@@ -94,6 +107,7 @@ allVideos.forEach((element: HTMLVideoElement) => {
 
         (<HTMLVideoElement>e.target).muted = false;
 
+        isVideo = true;
         video = <HTMLVideoElement>e.target;
         source = sourcesStore[(<HTMLVideoElement>e.target).id];
         source.connect(analyser);
