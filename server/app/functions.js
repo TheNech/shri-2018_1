@@ -1,10 +1,10 @@
 const { allowTypes } = require('../config');
 
-exports.getFormatedTime = function(ms) {
-    let sec = ms / 1000;
-    let hours = sec / 3600  % 24;
-    let minutes = sec / 60 % 60;
-    let seconds = sec % 60;
+exports.getFormattedTime = function(ms) {
+    const sec = ms / 1000;
+    const hours = sec / 3600  % 24;
+    const minutes = sec / 60 % 60;
+    const seconds = sec % 60;
 
     return num(hours) + ":" + num(minutes) + ":" + num(seconds);
 }

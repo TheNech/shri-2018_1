@@ -6,7 +6,7 @@ const port = 8000;
 
 const startDate = new Date();
 const data = require('./data/events.json');
-const { getFormatedTime, isTypeCorrect, filterDataByType } = require('./app/functions');
+const { getFormattedTime, isTypeCorrect, filterDataByType } = require('./app/functions');
 const { allowTypes } = require('./config');
 
 app.use(bodyParser.json());
@@ -24,7 +24,7 @@ app.get('/status', (req, res) => {
     let currentDate = new Date();
     let timeDiff = currentDate - startDate;
 
-    res.send(getFormatedTime(timeDiff));
+    res.send(getFormattedTime(timeDiff));
 });
 
 app.get('/api/events', (req, res) => {
