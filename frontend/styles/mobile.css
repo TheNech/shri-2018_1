@@ -1,0 +1,12 @@
+@media (max-width: 411px) {
+        
+    .cards-container {
+        grid-gap: 16px;
+        grid-template-columns: 1fr;
+    }
+    
+    .big {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+}

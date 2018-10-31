@@ -1,0 +1,28 @@
+{
+  "name": "shri-2018_1",
+  "version": "1.0.0",
+  "description": "SHRI Tasks",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server/server.js",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheNech/shri-2018_1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheNech/shri-2018_1/issues"
+  },
+  "homepage": "https://github.com/TheNech/shri-2018_1#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}

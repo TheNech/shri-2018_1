@@ -1,12 +1,5 @@
 @media (max-width: 1100px) {
-    .header__logo {
-        margin-left: 5.3%;
-    }
-
-    .ad-menu {
-        margin-left: 5%;
-    }
-
+    
     main {
         padding-left: 5.3%;
         padding-right: 5.3%;
@@ -134,9 +127,5 @@
     }
     #img-bright {
         justify-self: end;
-    }
-
-    footer {
-        display: none;
     }
 }
