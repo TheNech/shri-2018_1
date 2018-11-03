@@ -118,12 +118,18 @@
     
     .image-params {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
-    #img-zoom, #img-bright {
+    .image-params div {
         font-size: 12px;
         color: #333333;
         grid-column: span 1;
+    }
+    .image-params div:nth-child(2) {
+        justify-self: center;
+    }
+    .image-params div:last-child {
+        justify-self: right;
     }
     #img-bright {
         justify-self: end;
