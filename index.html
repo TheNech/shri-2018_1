@@ -27,7 +27,6 @@
                         <li><a href="#">Сводка</a></li>
                         <li><a href="#">Устройства</a></li>
                         <li><a href="#">Сценарии</a></li>
-                        <li><a href="pages/video.html">Видеонаблюдение</a></li>
                     </ul>
                 </nav>
             </div>
@@ -223,8 +222,9 @@
                         <img id="touch-img" src="assets/bitmap.png" srcset="assets/bitmap@2x.png 1920w, assets/bitmap@3x.png 2400w" alt="Пылесос">
                     </div>
                     <div class="image-params">
-                        <p id="img-zoom">Приближение: 120%</p>
-                        <p id="img-bright">Яркость: 50%</p>
+                        <div>Позиция: <span class="image-params__pos">0</span></div>
+                        <div>Приближение: <span class="image-params__scale">1.5</span></div>
+                        <div>Яркость: <span class="image-params__bright">1</span></div>
                     </div>
                 </div>
                 <div class="card__close"><img src="assets/cross-white.svg" alt="Закрыть"></div>
@@ -258,6 +258,7 @@
         </div>
     </footer>
     
-    <script src="scripts/index.js"></script>
+    <!-- <script src="scripts/index.js"></script> -->
+    <script src="dist/index.js"></script>
 </body>
 </html>

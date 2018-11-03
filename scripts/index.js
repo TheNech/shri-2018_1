@@ -1,102 +1,159 @@
 const container = document.querySelector('#touch-container');
-const img = document.querySelector('#touch-img');
-const zoomText = document.querySelector('#img-zoom');
+const image = document.querySelector('#touch-img');
 
-let currentGesture = {};
-let currentScale = 1.2;
-let containerWidth = container.offsetWidth;
-let paddingX = (containerWidth - containerWidth / currentScale) / 2;
-let currentX = 0;
-let dx;
-let distance = 0;
+const currentPointerEvents = {};
 
-let move = false;
+const imageState = {
+    scale: 1.5,
+    scaleMin: 1.5,
+    scaleMax: 3,
+    translateX: 0,
+    paddingX: 0,
+    brightMin: .2,
+    bright: 1,
+    brightMax: 4 
+};
+imageState.paddingX = (container.offsetWidth - container.offsetWidth / imageState.scale) / 2;
+
+let gesture = null;
 
 container.addEventListener('pointerdown', (event) => {
-    
-    // Нужно для десктопа чтобы поймать pointerup вне DOM-ноды
     container.setPointerCapture(event.pointerId);
-
-    currentGesture[event.pointerId] = {
-        startX: event.x,
-        startY: event.y
-    }
-
-    if(Object.keys(currentGesture).length == 2) {
-        distance = calcDistance();
+    
+    currentPointerEvents[event.pointerId] = event;
+    if(!gesture) {
+        gesture = { type: 'move' };
     }
 });
+
+const imageParams = {
+    pos: document.querySelector('.image-params__pos'),
+    scale: document.querySelector('.image-params__scale'),
+    bright: document.querySelector('.image-params__bright')
+};
+
+const setImageParams = (name, value) => {
+    imageParams[name].innerText = Math.round(value * 100) / 100;
+}
+
+const setTransform = (dx) => {
+    const { paddingX, scale } = imageState;
+
+    if(dx < 0 && (imageState.translateX + dx) < -paddingX) {
+        imageState.translateX = -paddingX;
+    } else if(dx > 0 && (imageState.translateX + dx) > paddingX) {
+        imageState.translateX = paddingX;
+    } else {
+        imageState.translateX += dx;
+    }
+
+    image.style.transform = `scale(${scale}) translateX(${imageState.translateX}px)`;
+    setImageParams('scale', imageState.scale);
+    setImageParams('pos', -imageState.translateX);
+};
+
+const getDistance = (e1, e2) => {
+    const {clientX: x1, clientY: y1} = e1;
+    const {clientX: x2, clientY: y2} = e2;
+    return Math.sqrt((x1 - x2) ** 2 - (y1 - y2) ** 2);
+};
+
+const getAngle = (e1, e2) => {
+    const {clientX: x1, clientY: y1} = e1;
+    const {clientX: x2, clientY: y2} = e2;
+    const r = Math.atan2(x2 - x1, y2 - y1);
+    return 360 - (180 + Math.round(r * 180 / Math.PI));
+}
 
 container.addEventListener('pointermove', (event) => {
-    if (currentGesture === {}) {
-        return
+    const pointersCount = Object.keys(currentPointerEvents).length;
+
+    if (pointersCount === 0 || !gesture) {
+        return;
     }
 
-    if(Object.keys(currentGesture).length == 1) {
-        for (let key in currentGesture) {
+    if(pointersCount === 1 && gesture.type === 'move') {
+        const previousEvent = currentPointerEvents[event.pointerId];
+        const dx = event.clientX - previousEvent.clientX;
+        setTransform(dx);
+        currentPointerEvents[event.pointerId] = event;
+    } else if(pointersCount === 2) {
+        currentPointerEvents[event.pointerId] = event;
+        const events = Object.values(currentPointerEvents);
+        const dist = getDistance(events[0], events[1]);
+        const angle = getAngle(events[0], events[1]);
 
-            const startX = currentGesture[key].startX;
-            const { x } = event;
-            dx = x - startX;
+        if(!gesture.startDist) {
+            gesture.startScale = imageState.scale;
+            gesture.startDist = dist;
 
-            if(Math.abs(currentX + dx) < paddingX ) {
-                img.style.transform = `scale(${currentScale}) translateX(${currentX + dx}px)`;
-                move = true;
+            gesture.startBright = imageState.bright;
+            gesture.startAngle = angle;
+            gesture.angleDiff = 0;
+            gesture.type = null;
+        }
+
+        const diff = dist / gesture.startDist;
+        const angleDiff = angle - gesture.startAngle;
+
+        if(!gesture.type) {
+            if(Math.abs(dist - gesture.startDist) < 32 && Math.abs(angleDiff) < 8) {
+                return;
+            } else if(Math.abs(dist - gesture.startDist) > 32) {
+                gesture.type = 'scale';
+            } else {
+                gesture.type = 'rotate';
             }
         }
-    }
 
-    if(Object.keys(currentGesture).length == 2) {
-        let prevDist = distance;
+        if(gesture.type === 'scale') {
+            const {scaleMin, scaleMax} = imageState;
+            let scale = gesture.startScale * diff;
+            if(diff < 1) {
+                imageState.scale = Math.max(scale, scaleMin);
+            } else {
+                imageState.scale = Math.min(scale, scaleMax);
+            }
 
-        currentGesture[event.pointerId] = {
-            startX: event.x,
-            startY: event.y
+            const startPaddingX = imageState.paddingX;
+            imageState.paddingX = (container.offsetWidth - container.offsetWidth / imageState.scale) / 2;
+            setTransform(imageState.paddingX - startPaddingX);
         }
 
-        distance = calcDistance();
-        let scaleDiff = distance / prevDist;
+        if(gesture.type === 'rotate') {
+            const { brightMin, brightMax} = imageState;
 
-        if(currentScale * scaleDiff > 1.2) {
-            currentScale *= scaleDiff;
-            paddingX = (containerWidth - containerWidth / currentScale) / 2;
-        } else {
-            currentScale = 1.2;
-            currentX = 0;
+            if(Math.abs(angleDiff - gesture.angleDiff) > 300) {
+                gesture.startBright = imageState.bright;
+                gesture.startAngle = angle;
+                gesture.angleDiff = 0;
+                return;
+            }
+
+            gesture.angleDiff = angleDiff;
+
+            let bright = gesture.startBright + angleDiff / 50;
+            if (angleDiff < 0) {
+                bright = Math.max(bright, brightMin);
+            } else {
+                bright = Math.min(bright, brightMax);
+            }
+
+            imageState.bright = bright;
+            image.style.filter = `brightness(${bright})`;
+            setImageParams('bright', bright);
         }
-        if(scaleDiff < 1 && currentScale > 1.2) {
-            currentX *= scaleDiff;
-        }
-
-        img.style.transform = `scale(${currentScale}) translateX(${currentX}px)`;
-
-        zoomText.innerHTML = `Приближение: ${Math.round(currentScale * 100)}%`
     }
 
-});
-
-container.addEventListener('pointerup', (event) => {
-    if(move) {
-        currentX += dx;
-        move = false;
-    }
     
-    delete currentGesture[event.pointerId];
+
 });
 
-container.addEventListener('pointercancel', () => {
-    currentGesture = {};
-});
-
-function calcDistance() {
-    let points = [];
-
-    for(let key in currentGesture) {
-        points.push(currentGesture[key]);
-    }
-
-    let powX = Math.pow(points[0].startX - points[1].startX, 2);
-    let powY = Math.pow(points[0].startY - points[1].startY, 2);
-
-    return Math.sqrt(powX + powY);
+const onPointerUp = (event) => {
+    gesture = null;
+    delete currentPointerEvents[event.pointerId];
 }
+
+container.addEventListener('pointerup', onPointerUp);
+container.addEventListener('pointercancel', onPointerUp);
+container.addEventListener('pointerleave', onPointerUp);
