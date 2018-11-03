@@ -45,6 +45,58 @@ nav a.active {
 }
 
 
+@media (max-width: 1100px) {
+    .header__logo {
+        margin-left: 5.3%;
+    }
+
+    .ad-menu {
+        margin-left: 5%;
+    }
+}
+@media (max-width: 411px) {
+    .header__logo {
+        margin-top: 22px;
+        margin-bottom: 18px;
+        margin-left: 5.3%;
+    }
+    
+    .ad-menu li {
+        width: 100%;
+        margin-top: 10px; 
+    }
+    .ad-menu  li:first-child {
+        margin-left: 27px;
+    }
+    .ad-menu ul {
+        display: none;
+    }
+    .ad-menu nav::before,
+    .ad-menu::after {
+        position: absolute;
+        top: 27px;
+        right: 20px;
+        display: block;
+        background-image: url(../assets/icon_list_m.png);
+        cursor: pointer;
+        height: 14px;
+        width: 16px;
+        content: '';
+    }
+    .ad-menu::after {
+        z-index: 1;
+    }
+    .ad-menu nav::before {
+        z-index: 2;
+    }
+    .ad-menu nav:focus::before {
+        z-index: 0;
+    }
+    .ad-menu nav:focus ul,
+    .ad-menu ul:hover {
+        display: block;
+    }
+}
 @media (min-width: 1920px) {
     .ad-menu {
         margin-left: 3.9%;
