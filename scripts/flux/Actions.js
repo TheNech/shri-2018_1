@@ -1,6 +1,6 @@
 import Dispatcher from './Dispatcher';
 
-class Action {
+class Actions {
     /**
      * Dispatch action
      * @param {Object} data 
@@ -25,3 +25,5 @@ class Action {
         console.log('Action SET_CONTRAST was called');
     }
 }
+
+export default Actions;
