@@ -23,10 +23,6 @@ main > h2 {
     margin-bottom: 20px;
 }
 
-button {
-    outline: none;
-}
-
 .video-container {
     position: relative;
     display: grid;
