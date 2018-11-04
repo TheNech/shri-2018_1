@@ -1,3 +1,7 @@
+import Actions from './flux/Actions';
+import VideoStore from './flux/VideoStore';
+import Store from './shri-2018-flux/js/Store';
+
 function initVideo(video, url) {
     if (Hls.isSupported()) {
         var hls = new Hls();
@@ -115,25 +119,37 @@ allVideos.forEach((element) => {
     });
 });
 
-// Изменение яркости
+// Применение Flux
+Store.subscribe(onChangeFilter);
+
+// Изменение яркости и контрастности
 for (let i = 0; i < allVideos.length; i++) {
+    // Яркость
     document.querySelector(`#video-${i + 1}__bright`).addEventListener('input', (e) => {
-        let videoContrast = document.querySelector(`#video-${i + 1}__contrast`).value;
-        changeFilter(allVideos[i], e.target.value, videoContrast);
+        Actions.setBright({
+            video: i,
+            value: e.target.value
+        });
     });
-}
 
-// Измнение контрастности
-for (let i = 0; i < allVideos.length; i++) {
+    // Контрастность
     document.querySelector(`#video-${i + 1}__contrast`).addEventListener('input', (e) => {
-        let videoBright = document.querySelector(`#video-${i + 1}__bright`).value;
-        changeFilter(allVideos[i], videoBright, e.target.value);
+        Actions.setContrast({
+            video: i,
+            value: e.target.value
+        });
     });
 }
 
-function changeFilter(el, bright, contrast) {
-    el.style.filter = `brightness(${bright}%) contrast(${contrast}%)`;
+function onChangeFilter(data) {
+    for(let key in data) {
+        const bright = data[key].bright;
+        const contrast = data[key].contrast;
+        allVideos[key].style.filter = `brightness(${bright}%) contrast(${contrast}%)`;
+    }
 }
+
+//----------------------------------
 
 // Обработка кнопки возврата к превью
 const buttonsBack = document.querySelectorAll('.video__back');
