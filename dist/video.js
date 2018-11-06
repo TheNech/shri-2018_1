@@ -136,6 +136,7 @@ processor.connect(ctx.destination);
 let sourcesStore = {};
 allVideos.forEach(element => {
     sourcesStore[element.id] = ctx.createMediaElementSource(element);
+    sourcesStore[element.id].connect(analyser);
 });
 
 let video = null;
@@ -194,11 +195,7 @@ allVideos.forEach((element) => {
 
 
         e.target.muted = false;
-
         video = e.target;
-        source = sourcesStore[e.target.id];
-        source.connect(analyser);
-        source.connect(processor);
     });
 });
 
