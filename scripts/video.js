@@ -1,6 +1,5 @@
 import Actions from './flux/Actions';
 import VideoStore from './flux/VideoStore';
-import Store from './shri-2018-flux/js/Store';
 
 function initVideo(video, url) {
     if (Hls.isSupported()) {
@@ -120,7 +119,7 @@ allVideos.forEach((element) => {
 });
 
 // Применение Flux
-Store.subscribe(onChangeFilter);
+VideoStore.subscribe(onChangeFilter);
 
 // Изменение яркости и контрастности
 for (let i = 0; i < allVideos.length; i++) {
@@ -145,7 +144,7 @@ function onChangeFilter(data) {
     for(let key in data) {
         const bright = data[key].bright;
         const contrast = data[key].contrast;
-        allVideos[key].style.filter = `brightness(${bright}%) contrast(${contrast}%)`;
+        allVideos[key].style.filter = `brightness(${bright || 100}%) contrast(${contrast || 100}%)`;
     }
 }
 

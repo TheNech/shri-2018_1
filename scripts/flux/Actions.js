@@ -26,4 +26,4 @@ class Actions {
     }
 }
 
-export default Actions;
+export default new Actions();

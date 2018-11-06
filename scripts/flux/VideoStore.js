@@ -1,4 +1,4 @@
-import { Store } from '../shri-2018-flux/js/Store';
+import Store from '../shri-2018-flux/js/Store';
 import dispatcher from './VideoDispatcher';
 
 class VideoStore extends Store {

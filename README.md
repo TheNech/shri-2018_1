@@ -28,4 +28,10 @@ row-gap, при котром промежутки зависили от высо
 - Анализатор звука отображает максимальное значение из получаемого массива.
 
 #### Архитектура
-- Клонировать репозиотрий с подмодулями `git clone --recursive https://github.com/TheNech/shri-2018_1/tree/flux`
+- Реализованная [библиотека](https://github.com/TheNech/shri-2018-flux) применена на странице ["Видеонаблюдение"](./pages/video.html)
+- Порядок запуска:
+    1. Клонировать репозиотрий с подмодулями `git clone --recursive https://github.com/TheNech/shri-2018_1/tree/flux`
+    2. Установка модулей `npm install`
+    3. Сборка JS-файлов `npm run build`
+    4. Запуск тестовых потоков по [инструкции](https://github.com/mad-gooze/shri-2018-2-multimedia-homework/blob/master/streams/README.md)
+    5. [Страница "Видеонаблюдение"](./pages/video.html)
