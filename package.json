@@ -1,0 +1,24 @@
+{
+  "name": "shri-2018_1",
+  "version": "1.0.0",
+  "description": "SHRI-2018. Frontend tasks",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "webpack": "^3.12.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheNech/shri-2018_1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheNech/shri-2018_1/issues"
+  },
+  "homepage": "https://github.com/TheNech/shri-2018_1#readme"
+}
