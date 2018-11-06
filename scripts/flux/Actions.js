@@ -1,4 +1,4 @@
-import Dispatcher from './Dispatcher';
+import Dispatcher from './VideoDispatcher';
 
 class Actions {
     /**
