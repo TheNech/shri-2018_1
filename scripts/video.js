@@ -116,12 +116,23 @@ allVideos.forEach((element) => {
 });
 
 // Применение Flux
+
+// Массивы инпутов
+const allBrightInputs = document.querySelectorAll('.video-bright');
+const allContrastInputs = document.querySelectorAll('.video-contrast');
+
+// Установка начальных значений фильров и инпутов
+const initState = VideoStore.getState();
+onChangeFilter(initState);
+setInitInputValue(initState);
+
+// Подписка на изменение хранилища
 VideoStore.subscribe(onChangeFilter);
 
 // Изменение яркости и контрастности
 for (let i = 0; i < allVideos.length; i++) {
     // Яркость
-    document.querySelector(`#video-${i + 1}__bright`).addEventListener('input', (e) => {
+    allBrightInputs[i].addEventListener('input', (e) => {
         Actions.setBright({
             video: i,
             value: e.target.value
@@ -129,7 +140,7 @@ for (let i = 0; i < allVideos.length; i++) {
     });
 
     // Контрастность
-    document.querySelector(`#video-${i + 1}__contrast`).addEventListener('input', (e) => {
+    allContrastInputs[i].addEventListener('input', (e) => {
         Actions.setContrast({
             video: i,
             value: e.target.value
@@ -142,6 +153,13 @@ function onChangeFilter(data) {
         const bright = data[key].bright;
         const contrast = data[key].contrast;
         allVideos[key].style.filter = `brightness(${bright || 100}%) contrast(${contrast || 100}%)`;
+    }
+}
+
+function setInitInputValue(data) {
+    for(let key in data) {
+        allBrightInputs[key].value = data[key].bright ? data[key].bright : allBrightInputs[key].value;
+        allContrastInputs[key].value = data[key].contrast ? data[key].contrast : allBrightInputs[key].value;        
     }
 }
 

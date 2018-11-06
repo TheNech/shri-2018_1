@@ -4,7 +4,7 @@ import dispatcher from './VideoDispatcher';
 class VideoStore extends Store {
     constructor(dispatcher) {
         super(dispatcher);
-        this.state = {};
+        this.state = localStorage.getItem('VideoState') ? JSON.parse(localStorage.getItem('VideoState')) : {};
     }
 
     /**
@@ -21,8 +21,10 @@ class VideoStore extends Store {
                     this.state[action.data.video].bright = action.data.value;
                 }
                 this.notify(this.state);
-
                 console.log('Store was changed');
+
+                localStorage.setItem('VideoState', JSON.stringify(this.state));
+                console.log('Store state was set to local storage');
                 break;
             }
             case 'SET_CONTRAST': {
@@ -33,8 +35,10 @@ class VideoStore extends Store {
                     this.state[action.data.video].contrast = action.data.value;
                 }
                 this.notify();
-
                 console.log('Store was changed');
+
+                localStorage.setItem('VideoState', JSON.stringify(this.state));
+                console.log('Store state was set to local storage');
                 break;
             }
             default: break;

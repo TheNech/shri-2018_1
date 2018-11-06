@@ -200,12 +200,23 @@ allVideos.forEach((element) => {
 });
 
 // Применение Flux
+
+// Массивы инпутов
+const allBrightInputs = document.querySelectorAll('.video-bright');
+const allContrastInputs = document.querySelectorAll('.video-contrast');
+
+// Установка начальных значений фильров и инпутов
+const initState = __WEBPACK_IMPORTED_MODULE_1__flux_VideoStore__["a" /* default */].getState();
+onChangeFilter(initState);
+setInitInputValue(initState);
+
+// Подписка на изменение хранилища
 __WEBPACK_IMPORTED_MODULE_1__flux_VideoStore__["a" /* default */].subscribe(onChangeFilter);
 
 // Изменение яркости и контрастности
 for (let i = 0; i < allVideos.length; i++) {
     // Яркость
-    document.querySelector(`#video-${i + 1}__bright`).addEventListener('input', (e) => {
+    allBrightInputs[i].addEventListener('input', (e) => {
         __WEBPACK_IMPORTED_MODULE_0__flux_Actions__["a" /* default */].setBright({
             video: i,
             value: e.target.value
@@ -213,7 +224,7 @@ for (let i = 0; i < allVideos.length; i++) {
     });
 
     // Контрастность
-    document.querySelector(`#video-${i + 1}__contrast`).addEventListener('input', (e) => {
+    allContrastInputs[i].addEventListener('input', (e) => {
         __WEBPACK_IMPORTED_MODULE_0__flux_Actions__["a" /* default */].setContrast({
             video: i,
             value: e.target.value
@@ -226,6 +237,13 @@ function onChangeFilter(data) {
         const bright = data[key].bright;
         const contrast = data[key].contrast;
         allVideos[key].style.filter = `brightness(${bright || 100}%) contrast(${contrast || 100}%)`;
+    }
+}
+
+function setInitInputValue(data) {
+    for(let key in data) {
+        allBrightInputs[key].value = data[key].bright ? data[key].bright : allBrightInputs[key].value;
+        allContrastInputs[key].value = data[key].contrast ? data[key].contrast : allBrightInputs[key].value;        
     }
 }
 
@@ -333,7 +351,7 @@ class Dispatcher {
 class VideoStore extends __WEBPACK_IMPORTED_MODULE_0__shri_2018_flux_js_Store__["a" /* default */] {
     constructor(dispatcher) {
         super(dispatcher);
-        this.state = {};
+        this.state = localStorage.getItem('VideoState') ? JSON.parse(localStorage.getItem('VideoState')) : {};
     }
 
     /**
@@ -350,8 +368,10 @@ class VideoStore extends __WEBPACK_IMPORTED_MODULE_0__shri_2018_flux_js_Store__[
                     this.state[action.data.video].bright = action.data.value;
                 }
                 this.notify(this.state);
-
                 console.log('Store was changed');
+
+                localStorage.setItem('VideoState', JSON.stringify(this.state));
+                console.log('Store state was set to local storage');
                 break;
             }
             case 'SET_CONTRAST': {
@@ -362,8 +382,10 @@ class VideoStore extends __WEBPACK_IMPORTED_MODULE_0__shri_2018_flux_js_Store__[
                     this.state[action.data.video].contrast = action.data.value;
                 }
                 this.notify();
-
                 console.log('Store was changed');
+
+                localStorage.setItem('VideoState', JSON.stringify(this.state));
+                console.log('Store state was set to local storage');
                 break;
             }
             default: break;
